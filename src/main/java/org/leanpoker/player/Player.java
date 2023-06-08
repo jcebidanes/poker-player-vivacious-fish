@@ -10,6 +10,8 @@ public class Player {
         int current_pot = Integer.valueOf(request.get("pot").asText());
         int current_call = Integer.valueOf(request.get("current_buy_in").asText());
 
+        JsonNode current_player_count = getPlayerCount(request.get("players"));
+
         if (shouldFold(current_pot, current_call)) {
             return 0;
         }
@@ -19,14 +21,32 @@ public class Player {
     public static void showdown(JsonNode game) {
     }
 
-    private static boolean shouldFold(int current_pot, int current_min_call) {
-        float winP = getWinProbability();
+    private static boolean shouldFold(int current_pot, int current_min_call, int current_player_count) {
+        float winP = getWinProbability(current_player_count);
         float gameCoef = winP*current_pot - (1 - winP)*(current_min_call);
 
         return gameCoef <= 0;
     }
 
-    private static float getWinProbability() {
+    private static int getPlayerCount(JsonNode players) {
+        int count = 0;
+        if (players.isArray()) {
+            Iterator<JsonNode> itr = array.iterator();
+            while (itr.hasNext()) {
+                JsonNode item=itr.next();
+                int player_stack = Integer.valueOf(item.get("stack").asText());
+                if (player_stack > 0) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    private static float getWinProbability(int playersLeft) {
+        if (playersLeft > 3) {
+            return 0;
+        }
         return 1;
     }
 }

@@ -1,5 +1,7 @@
 package org.leanpoker.player;
 
+import java.util.Iterator;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class Player {
@@ -31,9 +33,7 @@ public class Player {
     private static int getPlayerCount(JsonNode players) {
         int count = 0;
         if (players.isArray()) {
-            Iterator<JsonNode> itr = array.iterator();
-            while (itr.hasNext()) {
-                JsonNode item=itr.next();
+            for (JsonNode item : players) {
                 int player_stack = Integer.valueOf(item.get("stack").asText());
                 if (player_stack > 0) {
                     count++;

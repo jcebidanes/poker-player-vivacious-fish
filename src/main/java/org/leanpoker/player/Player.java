@@ -2,6 +2,7 @@ package org.leanpoker.player;
 
 import org.leanpoker.player.model.GameState;
 import org.leanpoker.player.model.PlayerState;
+import org.leanpoker.player.model.poker.GameEval;
 import org.leanpoker.player.model.poker.GameSimulator;
 import org.leanpoker.player.model.utils.GameParser;
 
@@ -22,7 +23,7 @@ public class Player {
         if (shouldFold(gameState)) {
             return 0;
         }
-        return (int) currentCall;
+        return (int) (currentCall - getMyPlayerState(gameState).getBet());
     }
 
     public static void showdown(JsonNode game) {

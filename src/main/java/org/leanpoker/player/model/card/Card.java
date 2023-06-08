@@ -5,6 +5,7 @@ import org.leanpoker.player.model.card.utils.SuitTypeDeserializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class Card {
 

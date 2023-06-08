@@ -6,11 +6,32 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.leanpoker.player.model.GameState;
 import org.leanpoker.player.model.card.Card;
 import org.leanpoker.player.model.card.RankType;
 import org.leanpoker.player.model.card.SuitType;
 
 public final class GameEval {
+    public static double getGameWinningProbability(GameState gameState) {
+        return 1;
+    }
+
+    public static boolean isPreFlop(GameState gameState) {
+        return gameState.getCommunityCards().size() == 0;
+    }
+
+    public static boolean isFlop(GameState gameState) {
+        return gameState.getCommunityCards().size() == 3;
+    }
+
+    public static boolean isTurn(GameState gameState) {
+        return gameState.getCommunityCards().size() == 4;
+    }
+
+    public static boolean isRiver(GameState gameState) {
+        return gameState.getCommunityCards().size() == 5;
+    }
+
     public static Card getHighestCard(List<Card> cards) {
         return cards.stream().max(Comparator.comparing(card -> ((Card) card).getRank().ordinal())).get();
     }

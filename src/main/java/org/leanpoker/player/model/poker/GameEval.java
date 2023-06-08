@@ -3,6 +3,7 @@ package org.leanpoker.player.model.poker;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.leanpoker.player.model.card.Card;
@@ -114,6 +115,28 @@ public final class GameEval {
     }
 
     public static List<Card> getStraightCards(List<Card> cards) {
+        for (Card card : cards) {
+            int cardRank = card.getRank().ordinal();
+            List<Card> otherCards = cards.stream()
+                    .filter(c -> !c.equals(card))
+                    .toList();
+
+            Optional<Card> card1 = otherCards.stream().filter(c1 -> c1.getRank().ordinal() == (cardRank + 1))
+                    .findFirst();
+            Optional<Card> card2 = otherCards.stream().filter(c1 -> c1.getRank().ordinal() == (cardRank + 2))
+                    .findFirst();
+            Optional<Card> card3 = otherCards.stream().filter(c1 -> c1.getRank().ordinal() == (cardRank + 3))
+                    .findFirst();
+            Optional<Card> card4 = otherCards.stream().filter(c1 -> c1.getRank().ordinal() == (cardRank + 4))
+                    .findFirst();
+
+            if (!card1.isEmpty()
+                    && !card2.isEmpty()
+                    && !card3.isEmpty()
+                    && !card4.isEmpty()) {
+                return List.of(card, card1.get(), card2.get(), card3.get(), card4.get());
+            }
+        }
         return List.of();
     }
 

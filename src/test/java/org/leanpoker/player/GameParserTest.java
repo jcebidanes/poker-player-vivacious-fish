@@ -75,21 +75,17 @@ public class GameParserTest {
         assertFalse(playerState.hasBadStartingHand());
     }
 
+    @Test
+    void hasStartingHand_HaveStrongHand() {
+        PlayerState playerState = buildHand(RankType.K, SuitType.CLUBS, RankType.TEN, SuitType.SPADES);
+        assertFalse(playerState.hasBadStartingHand());
+    }
+
     private PlayerState buildHand(RankType rank1, SuitType suit1, RankType rank2, SuitType suit2 ) {
-        PlayerState playerState = new PlayerState();
+        Card card1 = Card.builder().rank(rank1).suit(suit1).build();
+        Card card2 = Card.builder().rank(rank2).suit(suit2).build();
 
-        Card card1 = new Card();
-        Card card2 = new Card();
-
-        card1.setRank(rank1);
-        card1.setSuit(suit1);
-
-        card2.setRank(rank2);
-        card2.setSuit(suit2);
-
-        playerState.setHoleCards(List.of(card1, card2));
-
-        return playerState;
+        return PlayerState.builder().holeCards(List.of(card1, card2)).build();
     }
 
 

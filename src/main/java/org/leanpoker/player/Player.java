@@ -1,5 +1,9 @@
 package org.leanpoker.player;
 
+import org.leanpoker.player.model.GameState;
+import org.leanpoker.player.model.card.Card;
+import org.leanpoker.player.model.utils.GameParser;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class Player {
@@ -7,41 +11,41 @@ public class Player {
     static final String VERSION = "Default Java folding player";
 
     public static int betRequest(JsonNode request) {
-        int current_pot = Integer.valueOf(request.get("pot").asText());
-        int current_call = Integer.valueOf(request.get("current_buy_in").asText());
+        GameState gameState = GameParser.parse(request);
 
-        int current_player_count = getPlayerCount(request.get("players"));
+        long currentPot = gameState.getPot();
+        long currentCall = gameState.getCurrentBuyIn();
 
-        if (shouldFold(current_pot, current_call, current_player_count)) {
+        long currentPlayerCount = getPlayerCount(gameState);
+
+        if (shouldFold(currentPot, currentCall, currentPlayerCount)) {
             return 0;
         }
-        return current_call;
+        return (int)currentCall;
     }
 
     public static void showdown(JsonNode game) {
     }
 
-    private static boolean shouldFold(int current_pot, int current_min_call, int current_player_count) {
-        float winP = getWinProbability(current_player_count);
-        float gameCoef = winP*current_pot - (1 - winP)*(current_min_call);
+    private static boolean shouldFold(long currentPot, long currentMinCall, long currentPlayerCount) {
+        float winP = getWinProbability(currentPlayerCount);
+        float gameCoef = winP*currentPot - (1 - winP)*(currentMinCall);
 
         return gameCoef <= 0;
     }
 
-    private static int getPlayerCount(JsonNode players) {
-        int count = 0;
-        if (players.isArray()) {
-            for (JsonNode item : players) {
-                int player_stack = Integer.valueOf(item.get("stack").asText());
-                if (player_stack > 0) {
-                    count++;
-                }
-            }
-        }
-        return count;
+    private static long getPlayerCount(GameState gameState) {
+        return gameState.getPlayers().stream()
+                .filter(playerState -> playerState.getStack() > 0)
+                .toList()
+                .size();
     }
 
-    private static float getWinProbability(int playersLeft) {
+    private static Card[] getHand(Player player) {}
+
+    private static float getWinProbability(long playersLeft) {
+
+
         if (playersLeft > 2) {
             return 0;
         }

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 
 @Data
-class PlayerState {
+public class PlayerState {
 
     private long id;
 

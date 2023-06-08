@@ -42,7 +42,7 @@ public class Player {
     }
 
     private static float getWinProbability(int playersLeft) {
-        if (playersLeft > 3) {
+        if (playersLeft > 2) {
             return 0;
         }
         return 1;

@@ -10,7 +10,7 @@ public class Player {
         if (shouldFold()) {
             return 0;
         }
-        return request.get("minimum_raise");
+        return request.get("current_buy_in");
     }
 
     public static void showdown(JsonNode game) {

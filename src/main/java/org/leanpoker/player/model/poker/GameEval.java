@@ -117,15 +117,9 @@ public final class GameEval {
     }
 
     public static boolean has3OfAKind(List<Card> cards) {
-        for (Card card : cards) {
-            if (cards.stream()
-                    .filter(c -> !c.equals(card))
-                    .filter(c -> c.getRank().equals(card.getRank()))
-                    .count() == 2) {
-                return true;
-            }
-        }
-        return false;
+        Map<RankType, Long> sortedHand = sortHand(cards);
+        return sortedHand.entrySet().stream()
+                .anyMatch(rankTypeLongEntry -> rankTypeLongEntry.getValue() == 3);
     }
 
     public static RankType getHighest3ofAKindRank(List<Card> cards) {

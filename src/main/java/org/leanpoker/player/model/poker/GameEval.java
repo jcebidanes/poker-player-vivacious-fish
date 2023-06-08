@@ -1,5 +1,6 @@
 package org.leanpoker.player.model.poker;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +77,46 @@ public final class GameEval {
                 .count() >= 2;
     }
 
+    private static boolean hasStraight (List<Card> cards) {
+        List<Card> sortedCards = cards.stream()
+                .sorted(Comparator.comparing(c -> c.getRank().getRank()))
+                .collect(Collectors.toList());
+        int diff = 0;
+        int count = 0;
+        for(int i = 1; i < sortedCards.size(); i++) {
+            diff = sortedCards.get(i).getRank().getRank()
+                    - sortedCards.get(i-1).getRank().getRank();
+            if(diff == 1) {
+                count++;
+            }else {
+                count = 0;
+            }
+        }
+        return (count >= 4);
+    }
+
+    private static List<Card> getStraightCards (List<Card> cards) {
+        List<Card> sortedCards = cards.stream()
+                .sorted(Comparator.comparing(c -> c.getRank().getRank()))
+                .collect(Collectors.toList());
+        int diff = 0;
+        int count = 0;
+        List<Card> straightCards = new ArrayList<>();
+        for(int i = 1; i < sortedCards.size(); i++) {
+            diff = sortedCards.get(i).getRank().getRank()
+                    - sortedCards.get(i-1).getRank().getRank();
+            if(diff == 1) {
+                count++;
+                if(straightCards.isEmpty()) straightCards.add(sortedCards.get(i-1));
+                straightCards.add(sortedCards.get(i));
+            }else {
+                count = 0;
+                straightCards.clear();
+            }
+        }
+        return straightCards.size() >= 5 ? straightCards : List.of();
+    }
+
     public static boolean has3OfAKind(List<Card> cards) {
         for (Card card : cards) {
             if (cards.stream()
@@ -114,7 +155,7 @@ public final class GameEval {
         return false;
     }
 
-    public static boolean hasStraight(List<Card> cards) {
+    public static boolean hasStraight2(List<Card> cards) {
         for (Card card : cards) {
             int cardRank = card.getRank().ordinal();
             List<Card> otherCards = cards.stream()
@@ -131,7 +172,7 @@ public final class GameEval {
         return false;
     }
 
-    public static List<Card> getStraightCards(List<Card> cards) {
+    public static List<Card> getStraightCards2(List<Card> cards) {
         for (Card card : cards) {
             int cardRank = card.getRank().ordinal();
             List<Card> otherCards = cards.stream()

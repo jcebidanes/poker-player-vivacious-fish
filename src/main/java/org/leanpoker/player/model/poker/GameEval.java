@@ -41,13 +41,11 @@ public final class GameEval {
 
     public static RankType getHighestPairRank(List<Card> cards) {
         Map<RankType, Long> sortedHand = sortHand(cards);
-        sortedHand.entrySet().stream()
+        return sortedHand.entrySet().stream()
                 .filter(rankTypeLongEntry -> rankTypeLongEntry.getValue() == 2)
                 .max(Comparator.comparing(entry -> ((RankType)entry.getKey()).ordinal()))
-                .map(Map.Entry::getKey);
-
-        //TODO: Finish
-        return null;
+                .map(Map.Entry::getKey)
+                .get();
     }
 
     public static boolean hasTwoPairs(List<Card> cards) {
@@ -71,13 +69,11 @@ public final class GameEval {
 
     public static RankType getHighest3ofAKindRank(List<Card> cards) {
         Map<RankType, Long> sortedHand = sortHand(cards);
-        sortedHand.entrySet().stream()
+        return sortedHand.entrySet().stream()
                 .filter(rankTypeLongEntry -> rankTypeLongEntry.getValue() == 3)
                 .max(Comparator.comparing(entry -> ((RankType)entry.getKey()).ordinal()))
-                .map(Map.Entry::getKey);
-
-        //TODO: Finish
-        return null;
+                .map(Map.Entry::getKey)
+                .get();
     }
 
     public static boolean hasFullHouse(List<Card> cards) {

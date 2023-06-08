@@ -1,5 +1,6 @@
 package org.leanpoker.player.model;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,9 +36,7 @@ public class PlayerState {
 
     public boolean hasBadStartingHand() {
 
-        // I DON'T LIKE THIS
-        List<Card> tempHoleCards = new java.util.ArrayList<>(holeCards.stream().toList());
-        tempHoleCards.sort((c1, c2) -> c1.getRank().getRank() - c2.getRank().getRank());
+        List<Card> tempHoleCards = holeCards.stream().sorted(Comparator.comparingInt(c -> c.getRank().getRank())).toList();
 
         if(hasPair()) return false;
         else if( isHighCard(0) && isHighCard(1) ) return false;

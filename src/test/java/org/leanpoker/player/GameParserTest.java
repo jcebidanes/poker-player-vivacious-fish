@@ -1,11 +1,10 @@
 package org.leanpoker.player;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,12 +18,11 @@ import org.leanpoker.player.model.utils.GameParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GameParserTest {
+class GameParserTest {
 
     private String fileContents;
 
@@ -79,6 +77,7 @@ public class GameParserTest {
     }
 
     private PlayerState buildHand(RankType rank1, SuitType suit1, RankType rank2, SuitType suit2 ) {
+
         Card card1 = new Card();
         Card card2 = new Card();
 
@@ -88,9 +87,7 @@ public class GameParserTest {
         card2.setRank(rank2);
         card2.setSuit(suit2);
 
-        playerState.setHoleCards(List.of(card1, card2));
-
-        return playerState;
+        return PlayerState.builder().holeCards(List.of(card1, card2)).build();
     }
 
 

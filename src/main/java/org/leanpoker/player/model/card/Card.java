@@ -5,11 +5,13 @@ import org.leanpoker.player.model.card.utils.SuitTypeDeserializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
+@NoArgsConstructor
 public class Card {
 
     @JsonDeserialize(using = RankTypeDeserializer.class)

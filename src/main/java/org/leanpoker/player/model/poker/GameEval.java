@@ -44,6 +44,9 @@ public final class GameEval {
                 .filter(rankTypeLongEntry -> rankTypeLongEntry.getValue() == 2)
                 .max(Comparator.comparing(entry -> ((RankType)entry.getKey()).ordinal()))
                 .map(Map.Entry::getKey);
+
+        //TODO: Finish
+        return null;
     }
 
     public static boolean hasTwoPairs(List<Card> cards) {
@@ -71,6 +74,9 @@ public final class GameEval {
                 .filter(rankTypeLongEntry -> rankTypeLongEntry.getValue() == 3)
                 .max(Comparator.comparing(entry -> ((RankType)entry.getKey()).ordinal()))
                 .map(Map.Entry::getKey);
+
+        //TODO: Finish
+        return null;
     }
 
     public static boolean hasFullHouse(List<Card> cards) {

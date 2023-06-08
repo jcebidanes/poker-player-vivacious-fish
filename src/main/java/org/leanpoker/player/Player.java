@@ -22,6 +22,10 @@ public class Player {
 
         long currentPlayerCount = getPlayerCount(gameState);
 
+        if(getMyPlayerState(gameState).hasBadStartingHand()) {
+            return 0;
+        }
+
         if (shouldFold(currentPot, currentCall, currentPlayerCount, getHand(getMyPlayerState(gameState)))) {
             return 0;
         }
@@ -32,9 +36,8 @@ public class Player {
     }
 
     private static boolean shouldFold(long currentPot, long currentMinCall, long currentPlayerCount, List<Card> currentHand) {
-        if (currentHand)
-
-            float winP = getWinProbability(currentPlayerCount);
+//        if (currentHand)
+        float winP = getWinProbability(currentPlayerCount);
         float gameCoef = winP * currentPot - (1 - winP) * (currentMinCall);
 
         return gameCoef <= 0;

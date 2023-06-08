@@ -136,16 +136,9 @@ public final class GameEval {
     }
 
     public static boolean has4OfAKind(List<Card> cards) {
-        for (Card card : cards) {
-            if (cards.stream()
-                    .filter(c -> !c.equals(card))
-                    .filter(c -> c.getRank().equals(card.getRank()))
-                    .toList()
-                    .size() == 3) {
-                return true;
-            }
-        }
-        return false;
+        Map<RankType, Long> sortedHand = sortHand(cards);
+        return sortedHand.entrySet().stream()
+                .anyMatch(rankTypeLongEntry -> rankTypeLongEntry.getValue() == 4);
     }
 
     public static RankType get4ofAKindRank(List<Card> cards) {

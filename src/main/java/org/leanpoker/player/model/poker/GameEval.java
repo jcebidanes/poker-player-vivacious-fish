@@ -236,11 +236,15 @@ public final class GameEval {
     }
 
     public static boolean hasStraightFlush(List<Card> cards) {
-        SuitType flushSuit = getFlushSuit(cards);
+        if (!hasStraight(cards)) {
+            return false;
+        }
+        if (!hasFlush(cards)) {
+            return false;
+        }
 
-        return hasStraight(cards)
-                && hasFlush(cards)
-                && getStraightCards(cards).stream()
+        SuitType flushSuit = getFlushSuit(cards);
+        return getStraightCards(cards).stream()
                 .allMatch(card -> card.getSuit() == flushSuit);
     }
 

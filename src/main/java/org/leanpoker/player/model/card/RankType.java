@@ -4,7 +4,17 @@ import java.util.Optional;
 
 public enum RankType {
 
-    TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, J, Q, K, A;
+    TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), J(11), Q(12), K(13), A(14);
+
+    private int rank;
+
+    RankType(int rank) {
+        this.rank = rank;
+    }
+
+    public int getRank() {
+        return rank;
+    }
 
     public static Optional<RankType> fromValue(String status) {
         switch (status) {

@@ -5,14 +5,13 @@ import java.util.List;
 import org.leanpoker.player.model.GameState;
 import org.leanpoker.player.model.PlayerState;
 import org.leanpoker.player.model.card.Card;
-import org.leanpoker.player.model.card.RankType;
 import org.leanpoker.player.model.utils.GameParser;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class Player {
 
-    static final String VERSION = "Default Java folding player";
+    static final String VERSION = "1.0";
 
     public static int betRequest(JsonNode request) {
         GameState gameState = GameParser.parse(request);

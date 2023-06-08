@@ -3,12 +3,6 @@ plugins {
     id("io.micronaut.application") version "3.7.9"
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
-
 version = '1.0'
 
 repositories {
@@ -27,6 +21,8 @@ dependencies {
     implementation("jakarta.annotation:jakarta.annotation-api")
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
+
+    implementation('org.apache.commons:commons-lang3:3.8.1')
 
     compileOnly 'org.projectlombok:lombok:1.18.28'
     implementation group: 'commons-io', name: 'commons-io', version: '2.12.0'

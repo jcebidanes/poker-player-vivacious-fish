@@ -8,14 +8,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.leanpoker.player.model.GameState;
+import org.leanpoker.player.model.PlayerState;
+import org.leanpoker.player.model.Status;
 import org.leanpoker.player.model.card.Card;
 import org.leanpoker.player.model.card.RankType;
 import org.leanpoker.player.model.card.SuitType;
 
 public final class GameEval {
-    public static double getGameWinningProbability(GameState gameState) {
-        return 1;
-    }
 
     public static boolean isPreFlop(GameState gameState) {
         return gameState.getCommunityCards().size() == 0;
@@ -155,6 +154,15 @@ public final class GameEval {
         return false;
     }
 
+    public static RankType get4ofAKindRank(List<Card> cards) {
+        Map<RankType, Long> sortedHand = sortHand(cards);
+        return sortedHand.entrySet().stream()
+                .filter(rankTypeLongEntry -> rankTypeLongEntry.getValue() == 4)
+                .max(Comparator.comparing(entry -> ((RankType)entry.getKey()).ordinal()))
+                .map(Map.Entry::getKey)
+                .get();
+    }
+
     public static boolean hasStraight2(List<Card> cards) {
         for (Card card : cards) {
             int cardRank = card.getRank().ordinal();
@@ -249,5 +257,40 @@ public final class GameEval {
     private static Map<RankType, Long> sortHand(List<Card> cards) {
         return cards.stream()
                 .collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
+    }
+
+    public static int compareHands(List<Card> hand1, List<Card> hand2) {
+        return getHandRank(hand1) - getHandRank(hand2);
+    }
+
+    public static int getHandRank(List<Card> cards) {
+        if (hasRoyalFlush(cards)) {
+            return 700 + getStraightHighestRank(cards).ordinal();
+        }
+        if (hasStraightFlush(cards)) {
+            return 600 + getStraightHighestRank(cards).ordinal();
+        }
+        if (has4OfAKind(cards)) {
+            return 500 + get4ofAKindRank(cards).ordinal();
+        }
+        if (hasFullHouse(cards)) {
+            return 400 + getHighest3ofAKindRank(cards).ordinal();
+        }
+        if (has3OfAKind(cards)) {
+            return 300 + getHighest3ofAKindRank(cards).ordinal();
+        }
+        if (hasTwoPairs(cards)) {
+            return 200 + getHighestPairRank(cards).ordinal();
+        }
+        if (hasStrongPair(cards)) {
+            return 100 + getHighestPairRank(cards).ordinal();
+        }
+        return 0;
+    }
+
+    public static List<PlayerState> getRemainingPlayers(GameState gameState) {
+        return gameState.getPlayers().stream()
+                .filter(playerState -> playerState.getStatus().equals(Status.ACTIVE))
+                .toList();
     }
 }

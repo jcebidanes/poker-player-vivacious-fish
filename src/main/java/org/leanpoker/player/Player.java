@@ -10,7 +10,7 @@ public class Player {
         if (shouldFold()) {
             return 0;
         }
-        return request.get("current_buy_in");
+        return Integer.valueOf(request.get("current_buy_in").asText());
     }
 
     public static void showdown(JsonNode game) {

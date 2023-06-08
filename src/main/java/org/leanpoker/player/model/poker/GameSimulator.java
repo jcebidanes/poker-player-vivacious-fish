@@ -12,7 +12,7 @@ import org.leanpoker.player.model.card.SuitType;
 
 public class GameSimulator {
 
-    private static final int TOTAL_HANDS = 1000;
+    private static final int TOTAL_HANDS = 10000;
 
     public static double calculateWinningProbability(GameState gameState) {
         List<Card> playerHand = getMyPlayerState(gameState).getHoleCards();

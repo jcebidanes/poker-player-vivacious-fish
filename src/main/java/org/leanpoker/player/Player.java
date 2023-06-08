@@ -22,7 +22,8 @@ public class Player {
 
         long currentPlayerCount = getPlayerCount(gameState);
 
-        if(getMyPlayerState(gameState).hasBadStartingHand()) {
+
+        if(gameState.getCommunityCards().isEmpty() && getMyPlayerState(gameState).hasBadStartingHand()) {
             return 0;
         }
 

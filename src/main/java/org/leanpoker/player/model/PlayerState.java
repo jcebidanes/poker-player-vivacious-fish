@@ -10,9 +10,11 @@ import org.leanpoker.player.model.utils.StatusDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class PlayerState {
 
     private long id;
@@ -29,7 +31,7 @@ public class PlayerState {
     private long bet;
 
     @JsonProperty("hole_cards")
-    private List<Card> holeCards = new LinkedList<>();
+    private List<Card> holeCards;
 
     public boolean hasBadStartingHand() {
 
@@ -38,6 +40,7 @@ public class PlayerState {
         tempHoleCards.sort((c1, c2) -> c1.getRank().getRank() - c2.getRank().getRank());
 
         if(hasPair()) return false;
+        else if( isHighCard(0) && isHighCard(1) ) return false;
         else if(hasAce() && areCardsSuited() ) return false;
 
         else if(areCardsSuited() && tempHoleCards.get(0).getRank().equals(RankType.SEVEN) && tempHoleCards.get(1).getRank().equals(RankType.EIGHT)) return false;
@@ -47,10 +50,12 @@ public class PlayerState {
             return false;
         }
         else if(areCardsSuited() && tempHoleCards.get(0).getRank().equals(RankType.NINE) && (
-                tempHoleCards.get(1).getRank().equals(RankType.TEN) || tempHoleCards.get(1).getRank().equals(RankType.Q) || tempHoleCards.get(1).getRank().equals(RankType.K)
+                tempHoleCards.get(1).getRank().equals(RankType.TEN) || tempHoleCards.get(1).getRank().equals(RankType.J) || tempHoleCards.get(1).getRank().equals(RankType.Q) || tempHoleCards.get(1).getRank().equals(RankType.K)
         )) {
             return false;
         }
+
+
 
         return true;
     }
@@ -65,6 +70,10 @@ public class PlayerState {
 
     public boolean areCardsSuited() {
         return getHoleCards().get(0).getSuit().equals(getHoleCards().get(1).getSuit());
+    }
+
+    public boolean isHighCard(int index) {
+        return getHoleCards().get(index).getRank().getRank() >= 10;
     }
 
 }

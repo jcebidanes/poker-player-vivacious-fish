@@ -1,7 +1,5 @@
 package org.leanpoker.player;
 
-import java.util.Iterator;
-
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class Player {
@@ -12,7 +10,7 @@ public class Player {
         int current_pot = Integer.valueOf(request.get("pot").asText());
         int current_call = Integer.valueOf(request.get("current_buy_in").asText());
 
-        JsonNode current_player_count = getPlayerCount(request.get("players"));
+        int current_player_count = getPlayerCount(request.get("players"));
 
         if (shouldFold(current_pot, current_call, current_player_count)) {
             return 0;

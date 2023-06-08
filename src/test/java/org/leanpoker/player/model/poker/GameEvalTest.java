@@ -25,6 +25,7 @@ public class GameEvalTest {
         assertTrue(GameEval.hasPair(cards));
         assertFalse(GameEval.has3OfAKind(cards));
         assertFalse(GameEval.has4OfAKind(cards));
+        assertTrue(GameEval.hasStrongPair(cards));
         cards.add(Card.builder().suit(SuitType.DIAMONDS).rank(RankType.A).build());
         assertFalse(GameEval.hasPair(cards));
         assertTrue(GameEval.has3OfAKind(cards));
@@ -37,6 +38,7 @@ public class GameEvalTest {
         assertFalse(GameEval.hasPair(cards));
         assertFalse(GameEval.has3OfAKind(cards));
         assertTrue(GameEval.has4OfAKind(cards));
+
     }
 
     @Test
@@ -63,7 +65,42 @@ public class GameEvalTest {
         assertTrue(straightList.contains(cards.get(2)));
         assertTrue(straightList.contains(cards.get(4)));
         assertTrue(straightList.contains(cards.get(5)));
+        assertTrue(GameEval.getStraightHighestRank(cards)
+                           .equals(RankType.A));
     }
+
+    @Test
+    public void testHasFlush() {
+        List<Card> cards = getCardList(
+                Card.builder().suit(SuitType.CLUBS).rank(RankType.A).build(),
+                Card.builder().suit(SuitType.CLUBS).rank(RankType.Q).build(),
+                Card.builder().suit(SuitType.CLUBS).rank(RankType.TEN).build()
+        );
+        assertFalse(GameEval.hasFlush(cards));
+        cards.add(Card.builder().suit(SuitType.SPADES).rank(RankType.EIGHT).build());
+        assertFalse(GameEval.hasFlush(cards));
+        cards.add(Card.builder().suit(SuitType.CLUBS).rank(RankType.NINE).build());
+        assertFalse(GameEval.hasFlush(cards));
+        cards.add(Card.builder().suit(SuitType.CLUBS).rank(RankType.TWO).build());
+        assertTrue(GameEval.hasFlush(cards));
+    }
+
+    @Test
+    public void testHasTwoPairs() {
+        List<Card> cards = getCardList(
+                Card.builder().suit(SuitType.CLUBS).rank(RankType.EIGHT).build(),
+                Card.builder().suit(SuitType.DIAMONDS).rank(RankType.Q).build(),
+                Card.builder().suit(SuitType.CLUBS).rank(RankType.A).build()
+        );
+        assertFalse(GameEval.hasTwoPairs(cards));
+        cards.add(Card.builder().suit(SuitType.SPADES).rank(RankType.EIGHT).build());
+        assertFalse(GameEval.hasTwoPairs(cards));
+        cards.add(Card.builder().suit(SuitType.CLUBS).rank(RankType.Q).build());
+        assertTrue(GameEval.hasTwoPairs(cards));
+        cards.add(Card.builder().suit(SuitType.DIAMONDS).rank(RankType.EIGHT).build());
+        assertFalse(GameEval.hasTwoPairs(cards));
+    }
+
 
     private List<Card> getCardList (Card... cards) {
         return Stream.of(cards).collect(Collectors.toList());

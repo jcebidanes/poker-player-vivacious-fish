@@ -50,13 +50,15 @@ public class GameSimulator {
             }
 
             List<PlayerState> remainingPlayers = GameEval.getRemainingPlayers(gameState);
-            for (int j = 0; i < remainingPlayers.size() - 1; j++) {
+            for (int j = 0; j < remainingPlayers.size() - 1; j++) {
                 List<Card> otherPlayerHand = List.of(
                         remainingCards.get(0),
                         remainingCards.get(1),
                         gameCommunityCards.get(0),
                         gameCommunityCards.get(1),
-                        gameCommunityCards.get(2));
+                        gameCommunityCards.get(2),
+                        gameCommunityCards.get(3),
+                        gameRemainingCards.get(4));
 
                 if (GameEval.compareHands(playerHand, otherPlayerHand) < 0) {
                     break;

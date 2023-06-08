@@ -1,7 +1,6 @@
 package org.leanpoker.player.model;
 
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.leanpoker.player.model.card.Card;
@@ -11,11 +10,15 @@ import org.leanpoker.player.model.utils.StatusDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PlayerState {
 
     private long id;

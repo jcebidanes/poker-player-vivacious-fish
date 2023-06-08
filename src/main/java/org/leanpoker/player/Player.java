@@ -12,7 +12,7 @@ public class Player {
 
         JsonNode current_player_count = getPlayerCount(request.get("players"));
 
-        if (shouldFold(current_pot, current_call)) {
+        if (shouldFold(current_pot, current_call, current_player_count)) {
             return 0;
         }
         return current_call;

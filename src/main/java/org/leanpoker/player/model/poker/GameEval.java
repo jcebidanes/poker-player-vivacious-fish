@@ -77,7 +77,7 @@ public final class GameEval {
                 .count() >= 2;
     }
 
-    private static boolean hasStraight (List<Card> cards) {
+    public static boolean hasStraight (List<Card> cards) {
         List<Card> sortedCards = cards.stream()
                 .sorted(Comparator.comparing(c -> c.getRank().getRank()))
                 .collect(Collectors.toList());
@@ -95,7 +95,7 @@ public final class GameEval {
         return (count >= 4);
     }
 
-    private static List<Card> getStraightCards (List<Card> cards) {
+    public static List<Card> getStraightCards (List<Card> cards) {
         List<Card> sortedCards = cards.stream()
                 .sorted(Comparator.comparing(c -> c.getRank().getRank()))
                 .collect(Collectors.toList());
